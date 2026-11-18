@@ -1,22 +1,28 @@
-# DreamShield Android 0.6.1
+# DreamShield Android v0.6.1
 
-原生 Android 源码，界面使用 Jetpack Compose。包含配对连接、电脑状态、环境、抓拍与记录、策略预设与采样设置，以及客户端的睡眠日记和声景。
+The native Android app pairs with the DreamShield desktop server. Its Jetpack Compose interface shows connection status, bedside temperature and humidity, snapshots, and history. It supports policy presets and sampling settings, along with a local sleep journal, nightly routines, and offline soundscapes.
 
-## 构建
+## Build
 
-在 Android Studio 打开本目录。工程固定使用 Gradle 9.3.1、Android Gradle Plugin 9.1.1、compileSdk 37、targetSdk 37 和 minSdk 29。在 SDK Manager 中安装 Android SDK Platform 37 和 Build Tools 37.0.0。本机验证使用 OpenJDK 23.0.2，应用 Java／Kotlin 编译目标为 17。Windows 命令行可运行以下命令。
+Open this repository in Android Studio. The project uses Gradle 9.3.1 and Android Gradle Plugin 9.1.1. Install Android SDK Platform 37 and Build Tools 37.0.0 in SDK Manager. The app targets API 37 and supports API 29 and later. The verified Windows build used OpenJDK 23.0.2, with Java and Kotlin compilation targeting Java 17.
+
+Build and test on Windows from the repository root.
 
 ~~~powershell
 .\gradlew.bat :app:assembleDebug
 .\gradlew.bat :app:testDebugUnitTest
 ~~~
 
-SDK 路径由 Android Studio 或 ANDROID_HOME 指定。调试包默认生成在 app/build/outputs/apk/debug。发布签名须使用自己的密钥文件，并由原 Gradle 签名选项启用。
+Configure the SDK in Android Studio or through `ANDROID_HOME`. The debug APK is written to `app/build/outputs/apk/debug/`. For a signed release, configure the project's Gradle signing options with your own keystore.
 
-## 连接 v0.1.6
+## Pair with the server
 
-按照配套服务端的 README 在电脑启动服务，然后打开 http://127.0.0.1:8016/mobile-setup。手机和电脑处于同一家庭局域网时，通过 Android App 使用该页的配对信息连接电脑的 HTTPS 网关，默认端口 8746。
+1. Start [DreamShield Server](https://github.com/Reizen721/dreamshield-server) on your PC. This Android release pairs with Server v0.1.6.
+2. On the PC, open [the mobile setup page](http://127.0.0.1:8016/mobile-setup).
+3. Connect your phone and PC to the same local network. In the app, use the pairing information shown on the setup page. The mobile gateway uses HTTPS on port `8746` by default.
 
-配套服务端为 [DreamShield Server v0.1.6](https://github.com/Reizen721/dreamshield-server/tree/v0.1.6)。配对与策略设置遵循[手机接口约定](https://github.com/Reizen721/dreamshield-server/blob/v0.1.6/docs/mobile-api.md)。[版本兼容表](https://github.com/Reizen721/dreamshield-server/blob/v0.1.6/docs/compatibility.md)维护三个项目的验证范围。配套 Apple 客户端见 [DreamShield iOS](https://github.com/Reizen721/dreamshield-ios)。
+Configure the thermal assessment and closed-loop temperature control in the desktop console. See the [mobile API contract](https://github.com/Reizen721/dreamshield-server/blob/v0.1.6/docs/mobile-api.md) for pairing and policy routes, and the [compatibility matrix](https://github.com/Reizen721/dreamshield-server/blob/v0.1.6/docs/compatibility.md) for tested versions. The Apple companion app is in [DreamShield iOS](https://github.com/Reizen721/dreamshield-ios).
 
-Android 0.6.1 的调试构建和 62 项单元测试已在 Windows 验证。热像时序闭环的配置入口位于电脑控制台。
+## Verification
+
+The debug build and 62 unit tests passed on Windows for v0.6.1.
